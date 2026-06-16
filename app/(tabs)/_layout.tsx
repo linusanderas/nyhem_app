@@ -48,6 +48,7 @@ export default function TabLayout() {
         name="program"
         options={{
           title: 'Program',
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <LucideIcon name="Clock" size={size} color={color} />
           ),
@@ -88,7 +89,6 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen name="location" options={{ href: null, headerShown: false }} />
-      <Tabs.Screen name="event" options={{ href: null, headerShown: false }} />
     </Tabs>
   );
 }

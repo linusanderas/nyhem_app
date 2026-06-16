@@ -219,7 +219,7 @@ const BUTTONS = [
   {
     label: "Webb-TV",
     icon: "tv",
-    action: "https://www.tbnplay.se/browse",
+    action: "https://kanal10.se/serie/223",
   },
   {
     label: "Radio Nyhem",
@@ -230,12 +230,19 @@ const BUTTONS = [
     label: "Betala parkeringen",
     icon: "credit-card",
     action:
-      'swish://payment?data={"payee":{"value":"1234567890"},"message":{"value":"parking","editable":false}}',
+      'swish://payment?data=' +
+      encodeURIComponent(
+        '{"version":1,"payee":{"value":"1232861656","editable":false},"amount":{"value":40,"editable":false},"message":{"value":"Parkering via appen","editable":false}}'
+      ),
   },
   {
     label: "Ge en gåva",
     icon: "gift",
-    action: 'swish://payment?data={"payee":{"value":"1234567890"}}',
+    action:
+      'swish://payment?data=' +
+      encodeURIComponent(
+        '{"version":1,"payee":{"value":"1236805592","editable":false},"amount":{"value":500,"editable":true},"message":{"value":"Gåva via appen","editable":false}}'
+      ),
   },
   {
     label: "Bärarlaget",
@@ -322,7 +329,7 @@ export default function HomeScreen() {
           <View className="mb-4">
             <NextSessionCard
               event={nextSession}
-              onPress={() => router.push(`/event/${nextSession.id}`)}
+              onPress={() => router.push(`/program/event/${nextSession.id}`)}
             />
           </View>
         ) : (
@@ -361,7 +368,7 @@ export default function HomeScreen() {
               <TodayProgramRow
                 key={event.id}
                 event={event}
-                onPress={() => router.push(`/event/${event.id}`)}
+                onPress={() => router.push(`/program/event/${event.id}`)}
               />
             ))
           )}

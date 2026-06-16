@@ -24,18 +24,11 @@ import { PortalHost } from '@rn-primitives/portal';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { WebPortalContext } from '@/components/WebPortalContext';
 import * as SplashScreen from 'expo-splash-screen';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
+import { queryClient, persister } from '@/lib/queryPersistence';
 import { initNotifications } from '@/lib/notifications';
 import { useFavoritesStore } from '@/lib/stores/favoritesStore';
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 1000 * 60 * 5,
-      retry: 2,
-    },
-  },
-});
 
 SplashScreen.preventAutoHideAsync();
 
@@ -192,12 +185,19 @@ function RootContent() {
 
 export default function RootLayout() {
   return (
-    <QueryClientProvider client={queryClient}>
+    <PersistQueryClientProvider
+      client={queryClient}
+      persistOptions={{ persister }}
+      onSuccess={() => {
+        // Refetch fresh data whenever app resumes from background / cache restored
+        queryClient.invalidateQueries({ stale: true });
+      }}
+    >
       <ThemeProvider
         initialThemeName="light"
         themes={[lightTheme]}>
         <RootContent />
       </ThemeProvider>
-    </QueryClientProvider>
+    </PersistQueryClientProvider>
   );
 }

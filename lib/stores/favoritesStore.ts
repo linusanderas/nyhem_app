@@ -30,9 +30,9 @@ export const useFavoritesStore = create<FavoritesState>((set, get) => ({
       await subscribeToEventTopic(id);
     }
   },
-  setShowFavoritesFilter: async (show) => {
+  setShowFavoritesFilter: (show) => {
     set({ showFavorites: show });
-    await setShowFavorites(show);
+    setShowFavorites(show).catch((e) => console.warn('[store] storage write failed:', e));
   },
   loadFromStorage: async () => {
     const [favoritedIds, showFavorites] = await Promise.all([

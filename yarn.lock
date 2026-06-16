@@ -1361,15 +1361,15 @@ __metadata:
 
 "@draftbit/babel-plugin-inject-jsx-source@file:/usr/local/node_modules/@draftbit/babel-plugin-inject-jsx-source::locator=new-app%40workspace%3A.":
   version: 0.0.0
-  resolution: "@draftbit/babel-plugin-inject-jsx-source@file:/usr/local/node_modules/@draftbit/babel-plugin-inject-jsx-source#/usr/local/node_modules/@draftbit/babel-plugin-inject-jsx-source::hash=c029d1&locator=new-app%40workspace%3A."
-  checksum: 10c0/8cef504d443c3dcf952631cb997a628b20b92e55706fd34b81df729e31dc43e9bbff489da0d457b2335526e4e0f0e567801d1a628c0c990d2b1e6cb0c6d1625a
+  resolution: "@draftbit/babel-plugin-inject-jsx-source@file:/usr/local/node_modules/@draftbit/babel-plugin-inject-jsx-source#/usr/local/node_modules/@draftbit/babel-plugin-inject-jsx-source::hash=4070e0&locator=new-app%40workspace%3A."
+  checksum: 10c0/9a07b48b5d49e5a6c43f352995bbe5793aa23565053ff1e97ca7437a518727213308652dd7f5f01759fce6b2d2c5440b786149606474110c9bd5afbd96a6c120
   languageName: node
   linkType: hard
 
 "@draftbit/iframe-element-picker@file:/usr/local/node_modules/@draftbit/iframe-element-picker::locator=new-app%40workspace%3A.":
   version: 0.0.0
-  resolution: "@draftbit/iframe-element-picker@file:/usr/local/node_modules/@draftbit/iframe-element-picker#/usr/local/node_modules/@draftbit/iframe-element-picker::hash=d788d7&locator=new-app%40workspace%3A."
-  checksum: 10c0/6345ec13f3ab1d794ee83eae21acc69ecf758e1310979dbfab0eaa669c02145e6dc0c5c77188f847873507839904a58ea1bc375fc144c52ad6087393db74164a
+  resolution: "@draftbit/iframe-element-picker@file:/usr/local/node_modules/@draftbit/iframe-element-picker#/usr/local/node_modules/@draftbit/iframe-element-picker::hash=fcc2e8&locator=new-app%40workspace%3A."
+  checksum: 10c0/4f182827edaaea6c49df5de038273bfe510502a963496b529ca45c0625a9d3cc75c85e520e74f48cfbd3571007cfe16d118c5ee437a1edb8e74213210935010d
   languageName: node
   linkType: hard
 
@@ -4630,10 +4630,48 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/query-async-storage-persister@npm:^5.101.0":
+  version: 5.101.0
+  resolution: "@tanstack/query-async-storage-persister@npm:5.101.0"
+  dependencies:
+    "@tanstack/query-core": "npm:5.101.0"
+    "@tanstack/query-persist-client-core": "npm:5.101.0"
+  checksum: 10c0/e6f5278051c206614f7bb6494d60d175932330ae4640166cc34702183aaad5f7481a6ce6af1f4265dfb4e02659e06c77b6d3c24246c79b8eaab66b790a742fbd
+  languageName: node
+  linkType: hard
+
 "@tanstack/query-core@npm:5.100.14":
   version: 5.100.14
   resolution: "@tanstack/query-core@npm:5.100.14"
   checksum: 10c0/947942b1499169b279faf4eddd570719db5d6863c89db4ec2d54e1eb3fb66a679cfa87a15c9f2e9d5de523e4bcc1782c020fba913ead461b73ecec4fdd986c59
+  languageName: node
+  linkType: hard
+
+"@tanstack/query-core@npm:5.101.0":
+  version: 5.101.0
+  resolution: "@tanstack/query-core@npm:5.101.0"
+  checksum: 10c0/e3aacbb762887214b71d8f959930644594e2321b0cdca8eac098f894cbb75d1e32d45dc34a4b818fb8c68b344398905cf30f17c69cd87283adf73e64457e9320
+  languageName: node
+  linkType: hard
+
+"@tanstack/query-persist-client-core@npm:5.101.0":
+  version: 5.101.0
+  resolution: "@tanstack/query-persist-client-core@npm:5.101.0"
+  dependencies:
+    "@tanstack/query-core": "npm:5.101.0"
+  checksum: 10c0/08da24210aed18090a5cede03449f046e2aeae955518d8bfab01121237e41f6a311c635cedcd6bcc66b729ac560d49405527ced2612c8bc88fbbeaaee18ab92d
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query-persist-client@npm:^5.101.0":
+  version: 5.101.0
+  resolution: "@tanstack/react-query-persist-client@npm:5.101.0"
+  dependencies:
+    "@tanstack/query-persist-client-core": "npm:5.101.0"
+  peerDependencies:
+    "@tanstack/react-query": ^5.101.0
+    react: ^18 || ^19
+  checksum: 10c0/4a25223d0d21760c72b5988b9cacb5873bf825603aa5aecfd8662fbe8b97c651dfb971429ba23c1aeab83a22767ecbf06babf4bb165b4fca03f0685e3118543e
   languageName: node
   linkType: hard
 
@@ -5655,6 +5693,45 @@ __metadata:
   peerDependencies:
     "@babel/core": ^7.0.0
   checksum: 10c0/0b838d4412e3322cb4436f246e24e9c00bebcedfd8f00a2f51489db683bd35406bbd55a700759c28d26959c6e03f84dd6a1426f576f440267c1d7a73c5717281
+  languageName: node
+  linkType: hard
+
+"babel-preset-expo@npm:^54.0.11":
+  version: 54.0.11
+  resolution: "babel-preset-expo@npm:54.0.11"
+  dependencies:
+    "@babel/helper-module-imports": "npm:^7.25.9"
+    "@babel/plugin-proposal-decorators": "npm:^7.12.9"
+    "@babel/plugin-proposal-export-default-from": "npm:^7.24.7"
+    "@babel/plugin-syntax-export-default-from": "npm:^7.24.7"
+    "@babel/plugin-transform-class-static-block": "npm:^7.27.1"
+    "@babel/plugin-transform-export-namespace-from": "npm:^7.25.9"
+    "@babel/plugin-transform-flow-strip-types": "npm:^7.25.2"
+    "@babel/plugin-transform-modules-commonjs": "npm:^7.24.8"
+    "@babel/plugin-transform-object-rest-spread": "npm:^7.24.7"
+    "@babel/plugin-transform-parameters": "npm:^7.24.7"
+    "@babel/plugin-transform-private-methods": "npm:^7.24.7"
+    "@babel/plugin-transform-private-property-in-object": "npm:^7.24.7"
+    "@babel/plugin-transform-runtime": "npm:^7.24.7"
+    "@babel/preset-react": "npm:^7.22.15"
+    "@babel/preset-typescript": "npm:^7.23.0"
+    "@react-native/babel-preset": "npm:0.81.5"
+    babel-plugin-react-compiler: "npm:^1.0.0"
+    babel-plugin-react-native-web: "npm:~0.21.0"
+    babel-plugin-syntax-hermes-parser: "npm:^0.29.1"
+    babel-plugin-transform-flow-enums: "npm:^0.0.2"
+    debug: "npm:^4.3.4"
+    resolve-from: "npm:^5.0.0"
+  peerDependencies:
+    "@babel/runtime": ^7.20.0
+    expo: "*"
+    react-refresh: ">=0.14.0 <1.0.0"
+  peerDependenciesMeta:
+    "@babel/runtime":
+      optional: true
+    expo:
+      optional: true
+  checksum: 10c0/50eae5df3cf2502b66ecee09850ab93f99ec41e412effede1aa2bebc1053b5d13102107d4cfacb89719ad4bcfd2bd09adeb916f9c25630db686f728ec635fbc5
   languageName: node
   linkType: hard
 
@@ -10252,12 +10329,14 @@ __metadata:
     "@rn-primitives/toggle": "npm:^1.2.0"
     "@rn-primitives/toggle-group": "npm:^1.2.0"
     "@rn-primitives/tooltip": "npm:^1.2.0"
+    "@tanstack/query-async-storage-persister": "npm:^5.101.0"
     "@tanstack/react-query": "npm:^5.100.14"
+    "@tanstack/react-query-persist-client": "npm:^5.101.0"
     "@types/react": "npm:~19.1.10"
     "@typescript-eslint/eslint-plugin": "npm:^7.7.0"
     "@typescript-eslint/parser": "npm:^7.7.0"
     "@typescript/native-preview": "npm:^7.0.0-dev.20250530.1"
-    babel-preset-expo: "npm:~54.0.10"
+    babel-preset-expo: "npm:^54.0.11"
     class-variance-authority: "npm:^0.7.1"
     clsx: "npm:^2.1.1"
     eslint: "npm:^8.57.0"

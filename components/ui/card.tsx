@@ -8,7 +8,6 @@ const CARD_SHADOW = {
   shadowOffset: { width: 0, height: 1 },
   shadowOpacity: 0.05,
   shadowRadius: 2,
-  elevation: 1,
 } as const;
 
 function Card({
