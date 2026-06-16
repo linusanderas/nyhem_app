@@ -270,6 +270,7 @@ export default function HomeScreen() {
   >([]);
   const { data: ads1 } = useAd1();
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   const loadData = useCallback(async () => {
     let events = await getStoredEvents();
@@ -296,6 +297,7 @@ export default function HomeScreen() {
       },
       () => {},
     );
+    if (isInitialLoad) setIsInitialLoad(false);
   }, []);
   
   useFocusEffect(
@@ -314,10 +316,22 @@ export default function HomeScreen() {
     }
   };
   
+  // Visa loader vid första uppstart när ingen data finns cachad
+  if (isInitialLoad && !nextSession && todayProgram.length === 0) {
+    return (
+      <SafeAreaView className="flex-1 bg-background items-center justify-center" edges={[]}>
+        <ActivityIndicator size="large" color="#ac2839" />
+        <Text className="mt-4 text-body text-muted-foreground">
+          Laddar program...
+        </Text>
+      </SafeAreaView>
+    );
+  }
+  
   return (
     <SafeAreaView className="flex-1 bg-background" edges={[]}>
       <ScrollView
-        className="flex-1 px-4 py-4"
+        className="flex-1 px-4 pt-4 pb-20"
         showsVerticalScrollIndicator={false}
       >
         
