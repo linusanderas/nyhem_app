@@ -57,10 +57,11 @@ module.exports = {
         headOrigin: "https://89a7a78eac.sandbox.draftbit.dev:5100",
       },
     ],
-    "./plugins/draftbit-auto-launch-url-plugin",
+    ["./plugins/draftbit-auto-launch-url-plugin"],
   ],
-  scheme: "nyhemsveckan",
-  slug: "nyhemsveckan",
+
+  scheme: "new-app",
+  slug: "new-app",
   splash: {
     image: "./assets/splash.png",
     resizeMode: "contain",
@@ -84,11 +85,7 @@ module.exports = {
   platforms: ["ios", "android", "web"],
   description: undefined,
   locales: undefined,
-  extra: {
-    eas: {
-      projectId: "80b7db6b-50d5-40a9-983b-28e2fdf735e5",
-    },
-  },
+  extra: undefined,
   jsEngine: undefined,
   notification: {
     icon: "./assets/logo_nyhem_notification.png",
