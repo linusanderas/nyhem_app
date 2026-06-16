@@ -1,6 +1,6 @@
 {
   "cesVersion": "2.14.1",
-  "projectName": "new-app",
+  "projectName": "nyhemsveckan",
   "packages": [
     {
       "name": "expo-router",
