@@ -20,7 +20,8 @@ import {
 } from '@/utils/helpers';
 import { useState, useEffect, useRef } from 'react';
 
-const SELECTED_TAB_SHADOW = {
+const SELECTED_TAB_STYLE = {
+  backgroundColor: '#ffffff',
   shadowColor: '#000',
   shadowOffset: { width: 0, height: 1 },
   shadowOpacity: 0.05,
@@ -57,7 +58,7 @@ function EventCard({
   const categoryIcon = getEventIcon(event);
 
   return (
-    <Pressable cssInterop={false} onPress={onPress} style={{ opacity: getEventOpacity(event) }}>
+    <Pressable onPress={onPress} style={{ opacity: getEventOpacity(event) }}>
       <Card className="mb-3 p-4">
         <View className="flex-row items-start gap-3">
           <View
@@ -69,24 +70,20 @@ function EventCard({
             <Text className="text-primary font-semibold">{formatEventTime(event)}</Text>
             {location && (
               <Pressable
-                cssInterop={false}
-                onPress={() => router.push(`/location/${location.id}`)}>
-                <View className="flex-row items-center gap-1 mt-0.5">
-                  <LucideIcon name="MapPin" size={14} className="text-muted-foreground" />
-                  <Text className="text-caption text-muted-foreground">{location.title}</Text>
-                </View>
+                onPress={() => router.push(`/location/${location.id}`)}
+                className="flex-row items-center gap-1 mt-0.5">
+                <LucideIcon name="MapPin" size={14} className="text-muted-foreground" />
+                <Text className="text-caption text-muted-foreground">{location.title}</Text>
               </Pressable>
             )}
           </View>
-          <Pressable cssInterop={false} onPress={onToggleFavorite}>
-            <View className="p-1">
-              <LucideIcon
-                name="Heart"
-                size={20}
-                className={isFavorited ? 'text-primary' : 'text-muted-foreground'}
-                fill={isFavorited ? '#ac2839' : 'none'}
-              />
-            </View>
+          <Pressable onPress={onToggleFavorite} className="p-1">
+            <LucideIcon
+              name="Heart"
+              size={20}
+              className={isFavorited ? 'text-primary' : 'text-muted-foreground'}
+              fill={isFavorited ? '#ac2839' : 'none'}
+            />
           </Pressable>
         </View>
 
@@ -94,23 +91,21 @@ function EventCard({
 
         {speaker && (
           <Pressable
-            cssInterop={false}
-            onPress={() => router.push(`/speaker/${speaker.id}`)}>
-            <View className="flex-row items-center gap-2 mt-3">
-              {speaker.imageUrl ? (
-                <Image
-                  source={{ uri: speaker.imageUrl }}
-                  className="w-7 h-7 rounded-full bg-muted"
-                />
-              ) : (
-                <View className="w-7 h-7 rounded-full bg-muted items-center justify-center">
-                  <Text className="text-xs font-semibold text-muted-foreground">
-                    {getInitials(speaker.title)}
-                  </Text>
-                </View>
-              )}
-              <Text className="text-body">{speaker.title}</Text>
-            </View>
+            onPress={() => router.push(`/speaker/${speaker.id}`)}
+            className="flex-row items-center gap-2 mt-3">
+            {speaker.imageUrl ? (
+              <Image
+                source={{ uri: speaker.imageUrl }}
+                className="w-7 h-7 rounded-full bg-muted"
+              />
+            ) : (
+              <View className="w-7 h-7 rounded-full bg-muted items-center justify-center">
+                <Text className="text-xs font-semibold text-muted-foreground">
+                  {getInitials(speaker.title)}
+                </Text>
+              </View>
+            )}
+            <Text className="text-body">{speaker.title}</Text>
           </Pressable>
         )}
 
@@ -139,7 +134,10 @@ function EventCard({
 
 export default function ProgramScreen() {
   const { data: events, isLoading, error } = useEvents();
-  const { favoritedIds, showFavorites, toggleFavorite, setShowFavoritesFilter } = useFavoritesStore();
+  const favoritedIds = useFavoritesStore((s) => s.favoritedIds);
+  const showFavorites = useFavoritesStore((s) => s.showFavorites);
+  const toggleFavorite = useFavoritesStore((s) => s.toggleFavorite);
+  const setShowFavoritesFilter = useFavoritesStore((s) => s.setShowFavoritesFilter);
   const [showSend, setShowSend] = useState(true);
 
   const days = events ? extractUniqueDays(events) : [];
@@ -257,79 +255,59 @@ export default function ProgramScreen() {
         <Text className="text-h1 mb-4">Program</Text>
 
         <View className="flex-row bg-muted rounded-full p-1 mb-4">
-          <View className="flex-1">
-            <Pressable
-              cssInterop={false}
-              onPress={() => setShowFavoritesFilter(false)}
-              accessibilityRole="button"
-              accessibilityState={{ selected: !showFavorites }}>
-              <View
-                style={!showFavorites ? SELECTED_TAB_SHADOW : undefined}
-                className={`flex-row items-center justify-center gap-2 rounded-full py-2.5 ${
-                  !showFavorites ? 'bg-background' : ''
-                }`}>
-                <LucideIcon
-                  name="CalendarDays"
-                  size={16}
-                  className={!showFavorites ? 'text-primary' : 'text-muted-foreground'}
-                />
-                <Text
-                  className={`text-sm font-semibold ${
-                    !showFavorites ? 'text-foreground' : 'text-muted-foreground'
-                  }`}>
-                  Alla programpunkter
-                </Text>
-                <View
-                  className={`rounded-full px-2 py-0.5 min-w-[24px] items-center ${
-                    !showFavorites ? 'bg-primary' : 'bg-background'
-                  }`}>
-                  <Text
-                    className={`text-xs font-bold ${
-                      !showFavorites ? 'text-primary-foreground' : 'text-muted-foreground'
-                    }`}>
-                    {dayEventCount}
-                  </Text>
-                </View>
-              </View>
-            </Pressable>
-          </View>
-          <View className="flex-1">
-            <Pressable
-              cssInterop={false}
-              onPress={() => setShowFavoritesFilter(true)}
-              accessibilityRole="button"
-              accessibilityState={{ selected: showFavorites }}>
-              <View
-                style={showFavorites ? SELECTED_TAB_SHADOW : undefined}
-                className={`flex-row items-center justify-center gap-2 rounded-full py-2.5 ${
-                  showFavorites ? 'bg-background' : ''
-                }`}>
-                <LucideIcon
-                  name="Heart"
-                  size={16}
-                  className={showFavorites ? 'text-primary' : 'text-muted-foreground'}
-                  fill={showFavorites ? '#ac2839' : 'none'}
-                />
-                <Text
-                  className={`text-sm font-semibold ${
-                    showFavorites ? 'text-foreground' : 'text-muted-foreground'
-                  }`}>
-                  Mina favoriter
-                </Text>
-                <View
-                  className={`rounded-full px-2 py-0.5 min-w-[24px] items-center ${
-                    showFavorites ? 'bg-primary' : 'bg-background'
-                  }`}>
-                  <Text
-                    className={`text-xs font-bold ${
-                      showFavorites ? 'text-primary-foreground' : 'text-muted-foreground'
-                    }`}>
-                    {dayFavoriteCount}
-                  </Text>
-                </View>
-              </View>
-            </Pressable>
-          </View>
+          <Pressable
+            onPress={() => setShowFavoritesFilter(false)}
+            accessibilityRole="button"
+            accessibilityState={{ selected: !showFavorites }}
+            style={!showFavorites ? SELECTED_TAB_STYLE : undefined}
+            className="flex-1 flex-row items-center justify-center gap-2 rounded-full py-2.5">
+            <LucideIcon
+              name="CalendarDays"
+              size={16}
+              color={!showFavorites ? '#ac2839' : '#71717a'}
+            />
+            <Text
+              style={{ color: !showFavorites ? '#18181b' : '#71717a' }}
+              className="text-sm font-semibold">
+              Alla programpunkter
+            </Text>
+            <View
+              style={{ backgroundColor: !showFavorites ? '#ac2839' : '#ffffff' }}
+              className="rounded-full px-2 py-0.5 min-w-[24px] items-center">
+              <Text
+                style={{ color: !showFavorites ? '#ffffff' : '#71717a' }}
+                className="text-xs font-bold">
+                {dayEventCount}
+              </Text>
+            </View>
+          </Pressable>
+          <Pressable
+            onPress={() => setShowFavoritesFilter(true)}
+            accessibilityRole="button"
+            accessibilityState={{ selected: showFavorites }}
+            style={showFavorites ? SELECTED_TAB_STYLE : undefined}
+            className="flex-1 flex-row items-center justify-center gap-2 rounded-full py-2.5">
+            <LucideIcon
+              name="Heart"
+              size={16}
+              color={showFavorites ? '#ac2839' : '#71717a'}
+              fill={showFavorites ? '#ac2839' : 'none'}
+            />
+            <Text
+              style={{ color: showFavorites ? '#18181b' : '#71717a' }}
+              className="text-sm font-semibold">
+              Mina favoriter
+            </Text>
+            <View
+              style={{ backgroundColor: showFavorites ? '#ac2839' : '#ffffff' }}
+              className="rounded-full px-2 py-0.5 min-w-[24px] items-center">
+              <Text
+                style={{ color: showFavorites ? '#ffffff' : '#71717a' }}
+                className="text-xs font-bold">
+                {dayFavoriteCount}
+              </Text>
+            </View>
+          </Pressable>
         </View>
 
         <View className="flex-row items-center gap-2 mb-4">
@@ -375,7 +353,6 @@ export default function ProgramScreen() {
                 return (
                   <Pressable
                     key={day}
-                    cssInterop={false}
                     onPress={() => handleDayPress(day)}
                     onLayout={(e) => {
                       dayPositions.current.set(day, e.nativeEvent.layout.x);
@@ -383,25 +360,23 @@ export default function ProgramScreen() {
                       if (day === currentDayRef.current) {
                         centerDayInPicker(day, false);
                       }
-                    }}>
-                    <View
-                      className={`rounded-2xl px-6 py-3 items-center min-w-[96px] ${
-                        isSelected ? 'bg-primary' : 'bg-muted'
+                    }}
+                    className={`rounded-2xl px-6 py-3 items-center min-w-[96px] ${
+                      isSelected ? 'bg-primary' : 'bg-muted'
+                    }`}>
+                    <Text
+                      className={`font-bold text-base ${
+                        isSelected ? 'text-primary-foreground' : 'text-foreground'
                       }`}>
-                      <Text
-                        className={`font-bold text-base ${
-                          isSelected ? 'text-primary-foreground' : 'text-foreground'
-                        }`}>
-                        {weekday}
-                      </Text>
-                      <Text
-                        style={isSelected ? PRIMARY_FOREGROUND_SOFT : undefined}
-                        className={`text-caption mt-0.5 ${
-                          isSelected ? '' : 'text-muted-foreground'
-                        }`}>
-                        {day} jun
-                      </Text>
-                    </View>
+                      {weekday}
+                    </Text>
+                    <Text
+                      style={isSelected ? PRIMARY_FOREGROUND_SOFT : undefined}
+                      className={`text-caption mt-0.5 ${
+                        isSelected ? '' : 'text-muted-foreground'
+                      }`}>
+                      {day} jun
+                    </Text>
                   </Pressable>
                 );
               })}
@@ -432,7 +407,7 @@ export default function ProgramScreen() {
                 event={event}
                 isFavorited={favoritedIds.includes(event.id)}
                 onToggleFavorite={() => toggleFavorite(event.id)}
-                onPress={() => router.push(`/event/${event.id}`)}
+                onPress={() => router.push(`/program/event/${event.id}`)}
               />
             </View>
           ))}

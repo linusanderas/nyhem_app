@@ -1,4 +1,4 @@
-import { View, FlatList, Pressable, ActivityIndicator } from 'react-native';
+import { View, ScrollView, Pressable, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text } from '@/components/ui/text';
 import { Card } from '@/components/ui/card';
@@ -8,16 +8,15 @@ import { useAd2 } from '@/lib/hooks';
 import { useRouter } from 'expo-router';
 import { AppPage } from '@/types';
 import { filterInfoPages, extractInfoTags } from '@/utils/helpers';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, memo } from 'react';
 import { useFocusEffect } from 'expo-router';
 import { AdBanner } from '@/components/AdBanner';
 
-function InfoCard({ page, showExcerpt }: { page: AppPage; showExcerpt: boolean }) {
+const InfoCard = memo(function InfoCard({ page }: { page: AppPage }) {
   const router = useRouter();
-
   return (
     <Pressable onPress={() => router.push(`/info/${page.id}`)}>
-      <Card className="mb-3 p-4">
+      <Card className="mb-2 p-4">
         {page.is_approved === false && (
           <View className="bg-destructive px-3 py-1.5 rounded mb-2 -mx-1">
             <Text className="text-caption text-white font-bold text-center">
@@ -25,28 +24,11 @@ function InfoCard({ page, showExcerpt }: { page: AppPage; showExcerpt: boolean }
             </Text>
           </View>
         )}
-        <Text className="text-h4 font-bold flex-1">{page.title}</Text>
-        {page.tags && page.tags.length > 0 && (
-          <View className="mt-2 mb-2 flex-row flex-wrap gap-1">
-            {page.tags.map((tag, index) => (
-              <Badge
-                key={index}
-                variant="outline"
-                style={{ backgroundColor: tag.color, borderColor: tag.color }}>
-                <Text className="text-white">{tag.name}</Text>
-              </Badge>
-            ))}
-          </View>
-        )}
-        {showExcerpt && page.text && (
-          <Text className="text-body text-muted-foreground mt-2" numberOfLines={2}>
-            {page.text}
-          </Text>
-        )}
+        <Text className="text-h4 font-bold">{page.title}</Text>
       </Card>
     </Pressable>
   );
-}
+});
 
 export default function AllInfoScreen() {
   const { data: pages, isLoading, error } = usePages();
@@ -68,8 +50,11 @@ export default function AllInfoScreen() {
   const pagesToShow = filterInfoPages(allPages, currentTag);
 
   const handleTagPress = (tag: string) => {
+    console.log('[allinfo] tag pressed:', tag);
     setCurrentTag(tag);
   };
+
+  console.log('[allinfo] render', { currentTag, tagListLen: tagList.length, pagesToShowLen: pagesToShow.length });
 
   if (isLoading) {
     return (
@@ -95,7 +80,10 @@ export default function AllInfoScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-background" edges={[]}>
-      <View className="flex-1 px-4 py-4">
+      <ScrollView
+        cssInterop={false}
+        style={{ flex: 1, paddingHorizontal: 16, paddingVertical: 16 }}
+        showsVerticalScrollIndicator={false}>
         <Text className="text-h1 mb-2">All Information</Text>
         <Text className="text-body text-muted-foreground mb-4">
           Viktig information och praktiska detaljer
@@ -108,39 +96,32 @@ export default function AllInfoScreen() {
         )}
 
         {tagList.length > 0 && (
-          <View className="mb-4 -mx-4 px-4">
-            <FlatList
-              horizontal
-              data={tagList}
-              keyExtractor={(item) => item}
-              showsHorizontalScrollIndicator={false}
-              renderItem={({ item }) => (
-                <Pressable onPress={() => handleTagPress(item)} className="mr-2">
-                  <Badge
-                    variant={item === currentTag ? 'default' : 'outline'}
-                    className="px-3 py-1"
-                    style={item === currentTag ? { backgroundColor: '#ac2839' } : undefined}>
+          <View className="flex-row flex-wrap gap-2 mb-4">
+            {tagList.map((item) => {
+              const selected = item === currentTag;
+              return (
+                <Pressable
+                  key={item}
+                  onPress={() => handleTagPress(item)}
+                  style={{
+                    backgroundColor: selected ? '#ac2839' : 'transparent',
+                    borderColor: selected ? '#ac2839' : '#e5e5e5',
+                    borderWidth: 1,
+                    borderRadius: 999,
+                    paddingHorizontal: 12,
+                    paddingVertical: 6,
+                  }}>
+                  <Text style={{ color: selected ? '#ffffff' : '#18181b', fontSize: 13, fontWeight: '600' }}>
                     {item}
-                  </Badge>
+                  </Text>
                 </Pressable>
-              )}
-            />
+              );
+            })}
           </View>
         )}
 
         {pagesToShow.length > 0 ? (
-          <FlatList
-            data={pagesToShow}
-            keyExtractor={(item) => String(item.id)}
-            showsVerticalScrollIndicator={false}
-            renderItem={({ item, index }) => {
-              const isLongList = pagesToShow.length >= 5;
-              const showExcerpt = isLongList
-                ? index >= 4 || index === pagesToShow.length - 1
-                : true;
-              return <InfoCard page={item} showExcerpt={showExcerpt} />;
-            }}
-          />
+          pagesToShow.map((item) => <InfoCard key={item.id} page={item} />)
         ) : (
           <Card className="p-4">
             <Text className="text-body text-muted-foreground text-center">
@@ -155,7 +136,7 @@ export default function AllInfoScreen() {
             Kontakta oss på info@nyhemsveckan.se eller fråga personalen på plats.
           </Text>
         </Card>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }

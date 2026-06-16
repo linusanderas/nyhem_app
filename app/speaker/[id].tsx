@@ -90,7 +90,7 @@ export default function SpeakerScreen() {
                 return (
                   <Pressable
                     key={event.id}
-                    onPress={() => router.push(`/event/${event.id}`)}
+                    onPress={() => router.push(`/program/event/${event.id}`)}
                   >
                     <Card className="p-3 mb-2 flex-row items-start gap-3">
                       <View className="w-10 h-10 rounded-lg bg-primary/10 items-center justify-center">

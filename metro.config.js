@@ -11,6 +11,6 @@ new FileStore({
 }),
 ];
 
-config.cacheVersion = '0';
+config.cacheVersion = '1';
 
 module.exports = withNativeWind(config, { input: './global.css' });
