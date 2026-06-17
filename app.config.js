@@ -6,7 +6,7 @@ module.exports = {
       backgroundColor: "#aa133b",
     },
     package: "com.linusanderas.nyhem",
-    versionCode: 40102,
+    versionCode: 1,
     allowBackup: undefined,
     permissions: undefined,
     blockedPermissions: undefined,
@@ -50,6 +50,7 @@ module.exports = {
     "expo-asset",
     "expo-video",
     "expo-web-browser",
+
     [
       "expo-router",
       {
@@ -68,13 +69,7 @@ module.exports = {
     backgroundColor: "#aa133b",
   },
   userInterfaceStyle: "automatic",
-  version: "4.0.2",
-  updates: {
-    url: "https://u.expo.dev/80b7db6b-50d5-40a9-983b-28e2fdf735e5",
-  },
-  runtimeVersion: {
-    policy: "appVersion",
-  },
+  version: "1.0.0",
   web: {
     bundler: "metro",
     output: "single",
@@ -100,5 +95,4 @@ module.exports = {
     androidMode: "default",
     androidCollapsedTitle: undefined,
   },
-  
 };

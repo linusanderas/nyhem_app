@@ -1,4 +1,4 @@
-import { Pressable, Image } from 'react-native';
+import { Pressable, Image, View } from 'react-native';
 import * as Linking from 'expo-linking';
 import { Ad } from '@/types';
 
@@ -6,12 +6,15 @@ export function AdBanner({ ad }: { ad: Ad | null | undefined }) {
   if (!ad) return null;
 
   return (
-    <Pressable onPress={() => Linking.openURL(ad.link)}>
-      <Image
-        source={{ uri: ad.image }}
-        className="h-40 w-full rounded-lg"
-        resizeMode="cover"
-      />
-    </Pressable>
+    <View className="w-full overflow-hidden rounded-lg bg-muted">
+      <Pressable onPress={() => Linking.openURL(ad.link)}>
+        <Image
+          source={{ uri: ad.image }}
+          className="w-full"
+          resizeMode="contain"
+          style={{ aspectRatio: 16 / 9 }}
+        />
+      </Pressable>
+    </View>
   );
 }
